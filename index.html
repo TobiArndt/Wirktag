@@ -3,27 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine Webseite</title>
+    <title>Zufälliges Bild anzeigen</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
             color: #333;
             text-align: center;
-            margin-top: 50px;
+            padding-top: 100px;
         }
         img {
-            max-width: 100%;
+            max-width: 80%;
             height: auto;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
-    <h1>Willkommen auf meiner Webseite!</h1>
-    <p>Dies ist eine einfache, statische Webseite, die über GitHub Pages gehostet wird.</p>
+
     
-    <!-- Bild einfügen -->
-    <img src="lageplan/image_start_4_16.png" alt="Beispielbild">
+    <p>Bei jedem Laden der Seite wird ein Weg generiert.</p>
+    
+    <!-- Platzhalter für das zufällige Bild -->
+    <img id="randomImage" src="" alt="Zufälliges Bild wird geladen...">
+
+    <script>
+        // Einstellungen
+        const imageFolder = 'lageplan'; // Ordner, in dem sich die Bilder befinden
+        const imagePrefix = 'image_start_2_'; // Präfix des Bildnamens
+        const imageExtension = '.png'; // Dateierweiterung
+        const minNumber = 1; // Minimale Zahl im Namensmuster
+        const maxNumber = 20; // Maximale Zahl im Namensmuster
+
+        // Funktion zum Generieren einer zufälligen Zahl zwischen min und max
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Zufällige Zahl generieren
+        const randomNumber = getRandomNumber(minNumber, maxNumber);
+
+        // Vollständigen Bildpfad erstellen
+        const imagePath = `${imageFolder}/${imagePrefix}${randomNumber}${imageExtension}`;
+
+        // Bild im HTML setzen
+        const imgElement = document.getElementById('randomImage');
+        imgElement.src = imagePath;
+        imgElement.alt = `Bild Nummer ${randomNumber}`;
+    </script>
 
 </body>
 </html>
