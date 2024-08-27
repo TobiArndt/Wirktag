@@ -3,55 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zufälliges Bild anzeigen</title>
+    <title>Mehrere Texte über Bild einblenden</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
-            color: #333;
             text-align: center;
-            padding-top: 100px;
+            padding-top: 50px;
         }
-        img {
-            max-width: 80%;
+        .image-container {
+            position: relative;
+            display: inline-block; /* Damit die Box nur so groß ist wie das Bild */
+        }
+        .image-container img {
+            display: block;
+            max-width: 100%;
             height: auto;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .overlay-text {
+            position: absolute;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5); /* Halbtransparenter Hintergrund */
+            padding: 5px;
+            font-size: 16px;
+            pointer-events: none; /* Verhindert, dass der Text klickbar ist */
         }
     </style>
 </head>
 <body>
 
-    
-    <p>Bei jedem Laden der Seite wird ein Weg generiert.</p>
-    
-    <!-- Platzhalter für das zufällige Bild -->
-    <img id="randomImage" src="" alt="Zufälliges Bild wird geladen...">
+    <h1>Mehrere Texte über Bild einblenden</h1>
+    <p>Die Texte werden dynamisch über das Bild gelegt.</p>
+
+    <div class="image-container">
+        <img src="images/image_start_2_5.png" alt="Zufälliges Bild">
+    </div>
 
     <script>
-        // Einstellungen
-        const imageFolder = 'lageplan'; // Ordner, in dem sich die Bilder befinden
-        const imagePrefix = 'image_start_2_'; // Präfix des Bildnamens
-        const imageExtension = '.png'; // Dateierweiterung
-        const minNumber = 1; // Minimale Zahl im Namensmuster
-        const maxNumber = 20; // Maximale Zahl im Namensmuster
+        // Array der Texte und ihrer Positionen
+        const texts = [
+            { text: "Heimbach", top: "20px", left: "50px" },
+            { text: "i2solutions/AUNDE", top: "60px", left: "150px" },
+            { text: "GKD", top: "100px", left: "250px" },
+            { text: "R+F", top: "140px", left: "350px" },
+            { text: "Heusch", top: "180px", left: "450px" },
+            { text: "FEG", top: "220px", left: "550px" },
+            { text: "NeusserFormblech", top: "260px", left: "650px" },
+            { text: "DDD", top: "300px", left: "750px" },
+            { text: "Viethen", top: "340px", left: "850px" }
+        ];
 
-        // Funktion zum Generieren einer zufälligen Zahl zwischen min und max
-        function getRandomNumber(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+        // Referenz zur Bild-Container-Div
+        const imageContainer = document.querySelector('.image-container');
 
-        // Zufällige Zahl generieren
-        const randomNumber = getRandomNumber(minNumber, maxNumber);
+        // Schleife durch das Array der Texte
+        texts.forEach(item => {
+            // Neues div-Element für den Text erstellen
+            const textElement = document.createElement('div');
+            textElement.className = 'overlay-text';
+            textElement.style.top = item.top;
+            textElement.style.left = item.left;
+            textElement.textContent = item.text;
 
-        // Vollständigen Bildpfad erstellen
-        const imagePath = `${imageFolder}/${imagePrefix}${randomNumber}${imageExtension}`;
-
-        // Bild im HTML setzen
-        const imgElement = document.getElementById('randomImage');
-        imgElement.src = imagePath;
-        imgElement.alt = `Bild Nummer ${randomNumber}`;
+            // Text-Element dem Container hinzufügen
+            imageContainer.appendChild(textElement);
+        });
     </script>
 
 </body>
