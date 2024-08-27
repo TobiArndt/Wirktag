@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehrere Texte über Bild einblenden</title>
+    <title>Zufälliges Bild mit Texten einblenden</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,11 +32,11 @@
 </head>
 <body>
 
-    <h1>Mehrere Texte über Bild einblenden</h1>
-    <p>Die Texte werden dynamisch über das Bild gelegt.</p>
+    <h1>Zufälliges Bild mit Texten einblenden</h1>
+    <p>Ein zufälliges Bild wird ausgewählt und die Texte werden dynamisch darüber platziert.</p>
 
     <div class="image-container">
-        <img src="images/image_start_2_5.png" alt="Zufälliges Bild">
+        <img id="randomImage" alt="Zufälliges Bild">
     </div>
 
     <script>
@@ -52,6 +52,29 @@
             { text: "DDD", top: "300px", left: "750px" },
             { text: "Viethen", top: "340px", left: "850px" }
         ];
+
+        // Einstellungen für das zufällige Bild
+        const imageFolder = 'lageplan'; // Ordner, in dem sich die Bilder befinden
+        const imagePrefix = 'image_start_2_'; // Präfix des Bildnamens
+        const imageExtension = '.png'; // Dateierweiterung
+        const minNumber = 1; // Minimale Zahl im Namensmuster
+        const maxNumber = 100; // Maximale Zahl im Namensmuster (anpassen an den tatsächlichen Bereich)
+
+        // Funktion zum Generieren einer zufälligen Zahl zwischen min und max
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Zufällige Zahl generieren
+        const randomNumber = getRandomNumber(minNumber, maxNumber);
+
+        // Vollständigen Bildpfad erstellen
+        const imagePath = `${imageFolder}/${imagePrefix}${randomNumber}${imageExtension}`;
+
+        // Bild im HTML setzen
+        const imgElement = document.getElementById('randomImage');
+        imgElement.src = imagePath;
+        imgElement.alt = `Zufälliges Bild Nummer ${randomNumber}`;
 
         // Referenz zur Bild-Container-Div
         const imageContainer = document.querySelector('.image-container');
